@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <title>Sadada POS Home</title>
+    {% load static %}
+</head>
+<body>
+  
+  <script type="text/javascript">
+    var x = window.matchMedia("(max-width: 700px)")
+    if (x.matches) { // If media query matches
+      google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawStuff);
+
+    function drawStuff() {
+      var data = new google.visualization.arrayToDataTable(
+      {{gr|safe}}
+       );
+
+      var options = {
+        
+        title: 'Sales Report',
+        
+             width: 300,
+               
+       
+        legend: { position: 'none' },
+        chart: { title: "This Week Sales Data",
+                 subtitle: 'Based on sales report' },
+        bars: 'horizontal', // Required for Material Bar Charts.
+        axes: {
+          x: {
+            0: { side: 'top', label: 'Revenue'} // Top x-axis.
+          }
+        },
+        bar: { groupWidth: "90%" }
+      };
+
+      var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+      chart.draw(data, options);
+    };
+          } 
+    else {
+      google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawStuff);
+
+    function drawStuff() {
+      var data = new google.visualization.arrayToDataTable(
+      {{gr|safe}}
+       );
+
+      var options = {
+        
+        title: 'Sales Report',
+        
+             width: 700,
+               
+       
+        legend: { position: 'none' },
+        chart: { title: "This Week Sales Data",
+                 subtitle: 'Based on sales report' },
+        bars: 'horizontal', // Required for Material Bar Charts.
+        axes: {
+          x: {
+            0: { side: 'top', label: 'Revenue'} // Top x-axis.
+          }
+        },
+        bar: { groupWidth: "90%" }
+      };
+
+      var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+      chart.draw(data, options);
+    };
+          }
+    
+  </script>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable({{pay|safe}});
+
+      var options = {
+        title: "Today's Payment Methods",
+        pieHole: 0.4,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+      chart.draw(data, options);
+    }
+  </script>
+
+
+
+
+
+
+    {% include 'nav/nav_pos.html' %}
+    <div class="main">
+        {% for i in p %}
+        
+      
+      <div class="sub">
+       <div class="detail" >
+         <div class="input-group mb-3">
+         <span class="input-group-text" id="inputGroup-sizing-default"><strong> Restarant Name </strong></span>
+         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="{{i.business_name}}" readonly>
+         </div>
+         <div class="input-group mb-3">
+         <span class="input-group-text" id="inputGroup-sizing-default"> <strong> Owner Name </strong></span>
+         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="{{i.business_name}}" readonly>
+         </div>
+         <div class="input-group mb-3">
+         <span class="input-group-text" id="inputGroup-sizing-default"> <strong> Account Type </strong></span>
+         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="po" readonly>
+         </div>
+        
+      </div>
+        {% endfor %}
+      <div class="col-sm-6" style="width: 15%; height: 20%;  font-size: medium;">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Fast Billing</h5>
+            <p class="card-text">Now You can do fast billing from below link</p>
+            <a href="{% url 'fast_pos_billing' %}" class="btn btn-primary">Fast Billing</a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6" style="width: 15%; height: 20%; font-size: medium; margin-left: 2%;">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Help</h5>
+            <p class="card-text">For any help/support contact here</p>
+            <a href="https://wa.me/9347495033" class="btn btn-primary">Contact Support</a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="petail"  >
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h4 class="card-title">Today Date</h4>
+            <h5 class="card-subtitle mb-2 text-muted">{{date}}</h5>
+            <h4 class="card-title">Revenue from Sales</h4>
+            <h5 class="card-subtitle mb-2 text-muted">{{tSale}}</h5>
+            <h4 class="card-title">No.Of Sales</h4>
+            {% for i in nBills %}
+            <h5 class="card-subtitle mb-2 text-muted">{{i.bill_date__count}}</h5>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="sales-bar">
+          <div id="top_x_div" ></div>
+          <div id="donutchart" ></div>
+          </div>
+          
+      </div>
+</body>
+</html>
+
+<style>
+  #home_pos{
+        
+    font-size: 30px;
+}
+  body{
+    margin: 0;
+    font-size: x-large;
+  }
+  .sales-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .sub{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    
+  }
+  .main{
+    margin-top: -6%;
+  }
+  #donutchart{
+    height: 450px; width:700px; margin-top: -2%; margin-bottom: -4%;
+  }
+  #top_x_div{
+    height: 450px; margin-top: -6%; margin-left: 4%;
+  }
+  .detail{
+    margin: 0;
+    padding: 2%;
+    width: 35%; height: 25%; margin-left: 4%;
+  }
+  .petail{
+    margin: 0;
+    padding: 2%;
+    width: 35%; height: 20%;  margin-top: 4%; margin-left: 4%;
+    
+  }
+  @media only screen and (max-device-width: 700px) 
+      {
+
+        .sales-bar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  #donutchart{
+    height: 350px; width:350px; margin-top: 0; 
+  } 
+  #top_x_div{
+    height: 350px; margin-top: 0; margin-left: 1%;  margin-top: 10%; 
+  }
+  .col-sm-6{
+    display: none;
+  }
+  .sub{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    
+  }
+ 
+      body{
+        margin: 0;
+        font-size: small;
+      }
+      
+      .main{
+        margin-top: 0;
+      }
+     
+      .detail{
+        margin: 0;
+        padding: 0;
+        width: 80%;
+      }
+      .petail{
+        margin: 0;
+        padding: 0;
+        width: 80%;
+      }
+      
+      }
+</style>

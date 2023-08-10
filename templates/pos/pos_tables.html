@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <title>Tables</title>
+</head>
+<body>
+    {% include 'nav/nav_pos.html' %}
+    <div class="box">
+        <div class="liv" > <h2> Open Tables </h2></div>
+        <div class="liv"> <h2> Avaliable Tables </h2></div>
+        <div class="liv">
+             <div class="tabl">
+                {% for ot in open %}
+                <div class="chot">
+                    Table id: {{ot.table_id}} <br>
+                    {{ot.table_name}} <br>
+                    <a href="{% url 'pos_b_t' pi=ot.table_id  pn=ot.table_name %}" class="but-a" >Add More <img src="{% static 'cart-plus.svg' %}" style="width:18%"></a>
+                    <a href="{% url 'pos_checkout' ot.table_id  %}" class="but-c">Check Out <img src="{% static 'cart-check.svg' %}" style="width:18%"></a>
+                </div>
+                {% endfor %}
+             </div> 
+        </div>
+        <div class="liv"> 
+            <div class="tabl">
+                {% for at in av %}
+                <div class="chot">
+                    Table id: {{at.table_id}} <br>
+                    {{at.table_name}}
+                    <a href="{% url 'pos_b_t' pi=at.table_id  pn=at.table_name %}" class="but-p">Proceed <img src="{% static 'arrow-right-circle.svg' %}"style="width:18%" ></a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+<style>
+     #tables_pos{
+        
+        font-size: x-large;
+    }
+    body{
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: large;
+    }
+    .tabl{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-left: 6%;
+       
+    }
+    .chot{
+        text-align: left;
+        border: solid rgb(29, 255, 180) 3px;
+        border-radius: 15px;
+        text-decoration: none;
+        font-size: larger;
+        color: black;
+        margin: 2%;
+        width: 25%;
+        padding: 2%;
+        
+    }
+    .box{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        text-align: center;
+    }
+    .liv{
+        width: 50%;
+    }
+    ::-webkit-scrollbar{
+        width: 0.3em;
+        
+      }
+      ::-webkit-scrollbar-track{
+        background: white;
+      }
+      ::-webkit-scrollbar-thumb{
+        background: rgb(176, 176, 176);
+        
+      }
+      .but-a{
+        display: flex;
+       flex-direction: row;
+       padding: 2%;
+       background-color: rgb(29, 255, 180);
+       text-decoration:  none;
+       color: black;
+       border-radius: 7px;
+       justify-content: space-evenly;
+       margin-top: 4%;
+       align-items: center;
+
+      }
+      .but-c{
+        display: flex;
+       flex-direction: row;
+       padding: 2%;
+       background-color: rgb(68, 202, 255);
+       text-decoration:  none;
+       color: black;
+       border-radius: 7px;
+       justify-content: space-evenly;
+       align-items: center;
+       margin-top: 4%;
+      }
+      .but-p{
+        display: flex;
+       flex-direction: row;
+       padding: 2%;
+       background-color: rgb(253, 240, 55);
+       text-decoration:  none;
+       color: black;
+       border-radius: 7px;
+       justify-content: space-evenly;
+       align-items: center;
+       margin-top: 4%;
+      }
+      @media only screen and (max-device-width: 820px) 
+      {
+        body{
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        
+
+        align-items: center;
+        justify-content: center;
+        font-size: large;
+    }
+    .tabl{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-left: 0;
+       
+    }
+    .chot{
+        text-align: left;
+        border: solid rgb(29, 255, 180) 3px;
+        border-radius: 15px;
+        text-decoration: none;
+        font-size: larger;
+        color: black;
+        margin: 2%;
+        width: 60%;
+        padding: 2%;
+        
+    }
+    .box{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+        text-align: center;
+    }
+    .liv{
+      width: 100%;
+    }
+    ::-webkit-scrollbar{
+        width: 0.3em;
+        
+      }
+      ::-webkit-scrollbar-track{
+        background: white;
+      }
+      ::-webkit-scrollbar-thumb{
+        background: rgb(176, 176, 176);
+        
+      }
+      .but-a{
+        display: flex;
+       flex-direction: row;
+       padding: 2%;
+       background-color: rgb(29, 255, 180);
+       text-decoration:  none;
+       color: black;
+       border-radius: 7px;
+       justify-content: space-evenly;
+       margin-top: 4%;
+       align-items: center;
+
+      }
+      .but-c{
+        display: flex;
+       flex-direction: row;
+       padding: 2%;
+       background-color: rgb(68, 202, 255);
+       text-decoration:  none;
+       color: black;
+       border-radius: 7px;
+       justify-content: space-evenly;
+       align-items: center;
+       margin-top: 4%;
+      }
+      .but-p{
+        display: flex;
+       flex-direction: row;
+       padding: 1%;
+    }
+}
+</style>
